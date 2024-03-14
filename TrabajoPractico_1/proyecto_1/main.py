@@ -1,27 +1,50 @@
 # Aplicación principal
-# Define el diccionario donde se almacenará la información
-diccionario_peliculas = {}
 
-# Abre el archivo en modo de lectura utilizando with open
-#with open("data/frases_de_peliculas.txt", "r") as archivo:
-    # Lee cada línea del archivo
-    #for linea in archivo:
-        # Elimina el salto de línea al final y luego divide la línea en función del punto y coma
-        #frase, pelicula = linea.strip().split(";")
-        
-        # Guarda la información en el diccionario
-        #diccionario_peliculas[pelicula] = frase
+from flask import Flask, render_template, request
+import random
 
-# Imprime el diccionario resultante
-#print(diccionario_peliculas)
+app = Flask(__name__)
 
+# Función para procesar el archivo de frases de películas
+def procesar_archivo():
+    peliculas = set()
+    frases_peliculas = {}
+    with open("frases_de_peliculas.txt", "r", encoding="utf-8") as archivo:
+        for linea in archivo:
+            frase, pelicula = linea.strip().split(";")
+            frases_peliculas.setdefault(pelicula.lower(), []).append(frase)
+            peliculas.add(pelicula.lower())
+    return list(peliculas), frases_peliculas
 
-from flask import Flask, render_template
-app=Flask(__name__)
+peliculas, frases_peliculas = procesar_archivo()
+
+historial_resultados = []
 
 @app.route('/')
-def hello_world():
-    return render_template('templates/home.html')
+def index():
+    return render_template('index.html')
 
-if __name__=="__main__":
-    app.run()
+@app.route('/juego', methods=['POST'])
+def juego():
+    num_frases = int(request.form['num_frases'])
+    nombre_usuario = request.form['nombre_usuario']
+    
+    if num_frases < 3:
+        return "El número de frases debe ser mayor o igual a 3."
+    
+    peliculas_elegidas = random.sample(peliculas, num_frases)
+    frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
+    
+    return render_template('juego.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
+
+@app.route('/listar_peliculas')
+def listar_peliculas():
+    return render_template('listar_peliculas.html', peliculas=sorted(peliculas))
+
+@app.route('/resultados')
+def resultados():
+    return render_template('resultados.html', historial_resultados=historial_resultados)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+
