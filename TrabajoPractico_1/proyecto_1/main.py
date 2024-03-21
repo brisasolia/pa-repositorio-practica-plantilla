@@ -9,7 +9,7 @@ app = Flask(__name__)
 def procesar_archivo():
     peliculas = set()
     frases_peliculas = {}
-    with open("frases_de_peliculas.txt", "r", encoding="utf-8") as archivo:
+    with open("data/frases_de_peliculas.txt", "r", encoding="utf-8") as archivo:
         for linea in archivo:
             frase, pelicula = linea.strip().split(";")
             frases_peliculas.setdefault(pelicula.lower(), []).append(frase)
@@ -21,11 +21,12 @@ peliculas, frases_peliculas = procesar_archivo()
 historial_resultados = []
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def home():
+    return render_template('home.html')
 
 @app.route('/juego', methods=['POST'])
 def juego():
+    num_frases=int(input("ingrese el número de frases: "))
     num_frases = int(request.form['num_frases'])
     nombre_usuario = request.form['nombre_usuario']
     
