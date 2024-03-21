@@ -2,17 +2,21 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
+    <title>Trivia de películas</title>
 </head>
 <body>
-    <h1>Hello World</h1>
-    <h2>Hello World</h2>
-    <h3>Hello World</h3>
-    <hr />
-    <h4>Hello World</h4>
-    <h5>Hello World</h5>
-    <h6>Hello World</h6>
-    <p>Si caminas solo,<br>irás más rápido;<br>si caminas acompañado,<br> llegarás más lejos</p>
+    <h1>Bienvenido a la Trivia de películas</h1>
+    <p>Explicación breve de la dinámica del juego...</p>
+    <form action="/game" method="post">
+        <label for="num_frases">Número de frases:</label>
+        <input type="number" id="num_frases" name="num_frases" min="3" required><br>
+        <label for="nombre_usuario">Nombre de usuario:</label>
+        <input type="text" id="nombre_usuario" name="nombre_usuario" required><br>
+        <input type="submit" value="Iniciar juego">
+    </form>
+    <a href="/listar_peliculas">Listar nombres de películas</a><br>
+    <a href="/resultados">Ver resultados históricos</a>
 </body>
 </html>

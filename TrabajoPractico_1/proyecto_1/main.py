@@ -25,7 +25,7 @@ def home():
     return render_template('home.html')
 
 @app.route('/game', methods=['POST'])
-def juego():
+def game():
     num_frases=int(input("ingrese el número de frases: "))
     num_frases = int(request.form['num_frases'])
     nombre_usuario = request.form['nombre_usuario']
