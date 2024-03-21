@@ -24,7 +24,7 @@ historial_resultados = []
 def home():
     return render_template('home.html')
 
-@app.route('/juego', methods=['POST'])
+@app.route('/game', methods=['POST'])
 def juego():
     num_frases=int(input("ingrese el número de frases: "))
     num_frases = int(request.form['num_frases'])
@@ -36,7 +36,7 @@ def juego():
     peliculas_elegidas = random.sample(peliculas, num_frases)
     frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
     
-    return render_template('juego.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
+    return render_template('game.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
 
 @app.route('/listar_peliculas')
 def listar_peliculas():
