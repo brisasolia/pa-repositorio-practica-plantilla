@@ -24,17 +24,18 @@ historial_resultados = []
 def home():
     return render_template('home.html')
 
-@app.route('/game', methods=['POST'])
+@app.route('/game', methods=['POST', 'GET'])
 def game():
-    num_frases=int(input("ingrese el número de frases: "))
-    num_frases = int(request.form['num_frases'])
-    nombre_usuario = request.form['nombre_usuario']
+    if request.method=='POST':
+    #num_frases=int("ingrese el número de frases: ")
+        num_frases = int(request.form['num_frases'])
+        nombre_usuario = request.form['nombre_usuario']
     
-    if num_frases < 3:
-        return "El número de frases debe ser mayor o igual a 3."
+#    if num_frases < 3:
+#      return "El número de frases debe ser mayor o igual a 3."
     
-    peliculas_elegidas = random.sample(peliculas, num_frases)
-    frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
+        peliculas_elegidas = random.sample(peliculas, num_frases)
+        frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
     
     return render_template('game.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
 
