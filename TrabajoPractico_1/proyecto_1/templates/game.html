@@ -10,11 +10,17 @@
     <h1>Juego de Trivia de películas</h1>
     <p>¡Hola, {{ nombre_usuario }}!</p>
     <h2>Frases seleccionadas:</h2>
-    <ul>
-        {% for pelicula, frase in frases_elegidas.items() %}
-            <li>{{ pelicula }}: "{{ frase }}"</li>
-        {% endfor %}
-    </ul>
+    <form action="/respuestas" method="post">
+        <h2>Frase:</h2>
+        <p>{{ frase }}</p>
+        <h2>Opciones:</h2>
+        <input type="hidden" name="respuesta_correcta" value="{{ respuesta_correcta }}">
+        <input type="radio" name="opcion" value="{{ opcion1 }}">{{ opcion1 }}<br>
+        <input type="radio" name="opcion" value="{{ opcion2 }}">{{ opcion2 }}<br>
+        <input type="radio" name="opcion" value="{{ opcion3 }}">{{ opcion3 }}<br>
+        <input type="submit" value="Responder">
+    </form>
+
 </body>
 </html>
 

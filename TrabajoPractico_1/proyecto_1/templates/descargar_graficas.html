@@ -1,0 +1,16 @@
+<!-- templates/descargar_graficas.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descargar Gráficas</title>
+</head>
+<body>
+    <h1>Gráficas de Resultados</h1>
+    <a href="data:application/pdf;base64,{{ graficas_base64 }}" download="graficas.pdf">Descargar gráficas en PDF</a>
+    <a href="/graficas">Volver a las gráficas</a>
+    <a href="/">Regresar a la página principal</a>
+</body>
+</html>

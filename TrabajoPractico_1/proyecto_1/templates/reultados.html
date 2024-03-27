@@ -1,13 +1,32 @@
+<!-- templates/lista_resultados.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resultados históricos - Trivia de películas</title>
+    <title>Lista de Resultados</title>
 </head>
 <body>
-    <h1>Resultados históricos</h1>
-    <p>Aquí puedes mostrar los resultados históricos...</p>
+    <h1>Resultados de la Trivia</h1>
+    <table>
+        <tr>
+            <th>Nombre de Usuario</th>
+            <th>Aciertos</th>
+            <th>Total de Frases</th>
+            <th>Fecha y Hora de Inicio</th>
+        </tr>
+        {% for resultado in historial_resultados %}
+        <tr>
+            <td>{{ resultado[3] }}</td>
+            <td>{{ resultado[0] }}</td>
+            <td>{{ resultado[1] }}</td>
+            <td>{{ resultado[2].strftime('%d/%m/%y %H:%M') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/graficas">Ver gráficas</a>
+    <a href="/">Regresar a la página principal</a>
 </body>
 </html>
+
