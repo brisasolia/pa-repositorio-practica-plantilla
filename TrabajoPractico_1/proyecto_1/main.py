@@ -39,23 +39,40 @@ def juego():
 #    if num_frases < 3:
 #      return "El número de frases debe ser mayor o igual a 3."
     
-        peliculas_elegidas = random.sample(peliculas, num_frases)
-        frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
+    peliculas_elegidas = random.sample(peliculas, num_frases)
+    frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
     
     return render_template('game.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
 
 @app.route('/game', methods=['GET', 'POST'])
-#def game():
-    #if request.method == 'POST':
-       # num_frases = int(request.form['num_frases'])
-        #nombre_usuario = request.form['nombre_usuario']
+def game():
+    if request.method == 'POST':
+        num_frases = int(request.form['num_frases'])
+        nombre_usuario = request.form['nombre_usuario']
         
-        #peliculas_elegidas = random.sample(peliculas, num_frases)
-    #    frases_elegidas = {pelicula: random.choice(frases_peliculas[pelicula]) for pelicula in peliculas_elegidas}
+        # Verificar que el número de frases sea mayor o igual a 3
+        if num_frases < 3:
+            return "El número de frases debe ser mayor o igual a 3."
         
-    #    return render_template('game.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
-   # else:
-    #    return render_template('game.html')
+        # Seleccionar frases aleatorias sin repetir
+        frases_seleccionadas = []
+        peliculas_elegidas = set()
+        while len(frases_seleccionadas) < num_frases:
+            pelicula = random.choice(peliculas)
+            if pelicula not in peliculas_elegidas:
+                frase = random.choice(frases_peliculas[pelicula])
+                opciones = [p for p in peliculas if p != pelicula]
+                opciones = random.sample(opciones, 2)
+                opciones.append(pelicula)
+                random.shuffle(opciones)
+                frases_seleccionadas.append({'frase': frase, 'respuesta_correcta': pelicula, 'opciones': opciones})
+                peliculas_elegidas.add(pelicula)
+        
+        return render_template('game.html', num_frases=num_frases, nombre_usuario=nombre_usuario, frases_seleccionadas=frases_seleccionadas)
+    else:
+        return render_template('game.html')
+
+
 
 @app.route('/listar_peliculas')
 def listar_peliculas():
@@ -64,31 +81,6 @@ def listar_peliculas():
 @app.route('/resultados')
 def resultados():
     return render_template('resultados.html', historial_resultados=historial_resultados)
-
-
-@app.route('/game', methods=['POST'])
-def game():
-    num_frases = int(request.form['num_frases'])
-    nombre_usuario = request.form['nombre_usuario']
-    
-    if num_frases < 3:
-        return "El número de frases debe ser mayor o igual a 3."
-    
-    frases_elegidas = []
-    peliculas_elegidas = set()
-    while len(frases_elegidas) < num_frases:
-        pelicula = random.choice(peliculas)
-        if pelicula not in peliculas_elegidas:
-            frase = random.choice(frases_peliculas[pelicula])
-            opciones = [p for p in peliculas if p != pelicula]
-            opciones = random.sample(opciones, 2)
-            opciones.append(pelicula)
-            random.shuffle(opciones)
-            frases_elegidas.append({'frase': frase, 'respuesta_correcta': pelicula, 'opciones': opciones})
-            peliculas_elegidas.add(pelicula)
-    
-    return render_template('game.html', nombre_usuario=nombre_usuario, frases_elegidas=frases_elegidas)
-
 
 
 

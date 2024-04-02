@@ -5,8 +5,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trivia de películas</title>
+
 </head>
 <body>
+    <body style="background-color:#2f70d39d;">
+        <img src="{{url_for('static', filename='image.jpeg') }}" width="400">
     <h1>Bienvenido a la Trivia de películas</h1>
     <p>Explicación breve de la dinámica del juego...</p>
     <form action="{{ url_for('game') }}" method="post">

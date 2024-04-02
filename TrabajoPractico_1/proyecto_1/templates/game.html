@@ -4,23 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Juego - Trivia de películas</title>
+    <title>Trivia de películas</title>
 </head>
 <body>
-    <h1>Juego de Trivia de películas</h1>
-    <p>¡Hola, {{ nombre_usuario }}!</p>
-    <h2>Frases seleccionadas:</h2>
-    <form action="/respuestas" method="post">
-        <h2>Frase:</h2>
-        <p>{{ frase }}</p>
-        <h2>Opciones:</h2>
-        <input type="hidden" name="respuesta_correcta" value="{{ respuesta_correcta }}">
-        <input type="radio" name="opcion" value="{{ opcion1 }}">{{ opcion1 }}<br>
-        <input type="radio" name="opcion" value="{{ opcion2 }}">{{ opcion2 }}<br>
-        <input type="radio" name="opcion" value="{{ opcion3 }}">{{ opcion3 }}<br>
+    <body style="background-color:#2f70d39d;">
+        <img src="{{url_for('static', filename='image.jpeg') }}" width="400">
+    <h1>Trivia de películas</h1>
+    <h2>Bienvenido, {{ nombre_usuario }}!</h2>
+    <form action="/game" method="post">
+        <input type="hidden" name="nombre_usuario" value="{{ nombre_usuario }}">
+        <input type="hidden" name="num_frases" value="{{ num_frases }}">
+        {% for index, frase in enumerate(frases_seleccionadas) %}
+        <div>
+            <h3>Frase {{ index + 1 }}:</h3>
+            <p>{{ frase['frase'] }}</p>
+            <h3>Opciones:</h3>
+            {% for opcion in frase['opciones'] %}
+            <input type="radio" name="opcion{{ index }}" value="{{ opcion }}"> {{ opcion }}<br>
+            {% endfor %}
+            <input type="hidden" name="respuesta_correcta{{ index }}" value="{{ frase['respuesta_correcta'] }}">
+        </div>
+        {% endfor %}
         <input type="submit" value="Responder">
     </form>
-
 </body>
 </html>
-
