@@ -1,25 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trivia de películas</title>
-
-</head>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Trivia de películas</title>
+        <style>
+            body {
+                background-color: #76b7f4;
+                color: black;
+                font-family: "Arial", sans-serif;
+                text-align: center;
+            }
+            
+            h1 {
+                margin-top: 50px;
+            }
+            
+            .btn {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        </style>
 <body>
     <body style="background-color:#2f70d39d;">
         <img src="{{url_for('static', filename='image.jpeg') }}" width="400">
-    <h1>Bienvenido a la Trivia de películas</h1>
-    <p>Explicación breve de la dinámica del juego...</p>
+        <p>En la pantalla se te mostrará una frase de una película.</p>
+        <p>Para cada frase, tendrás que elegir la película correcta de las 3 opciones.</p>
+        <p>Al final del juego, se te mostrará tu puntaje y podrás ver las respuestas correctas.</p>
+        <p>¡Buena suerte!</p>
     <form action="{{ url_for('game') }}" method="post">
-        <label for="num_frases">Número de frases:</label>
-        <input type="number" id="num_frases" name="num_frases" min="3" required><br>
         <label for="nombre_usuario">Nombre de usuario:</label>
         <input type="text" id="nombre_usuario" name="nombre_usuario" required><br>
+        <label for="num_frases">Número de frases (entre 3 y 10):</label>
+        <input type="number" id="num_frases" name="num_frases" min="3"  max="10" value="3" required><br>
+        <br>
+        <br>
         <input type="submit" value="Iniciar juego">
     </form>
+    <br>
+    <br>
     <a href="/listar_peliculas">Listar nombres de películas</a><br>
-    <a href="/resultados">Ver resultados históricos</a>
+    <br>
+    <br>
+    <a href="/mostrar_historial">Ver resultados históricos</a>
 </body>
 </html>

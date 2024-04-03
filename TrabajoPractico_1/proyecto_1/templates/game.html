@@ -1,5 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Trivia de películas</title>
+        <style>
+            body {
+                background-color: #76b7f4;
+                color: black;
+                font-family: "Arial", sans-serif;
+                text-align: center;
+            }
+            
+            h1 {
+                margin-top: 50px;
+            }
+            
+            .btn {
+                margin-top: 20px;
+                padding: 10px 20px;
+                font-size: 16px;
+            }
+        </style>
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,25 +28,38 @@
     <title>Trivia de películas</title>
 </head>
 <body>
-    <body style="background-color:#2f70d39d;">
         <img src="{{url_for('static', filename='image.jpeg') }}" width="400">
-    <h1>Trivia de películas</h1>
-    <h2>Bienvenido, {{ nombre_usuario }}!</h2>
-    <form action="/game" method="post">
-        <input type="hidden" name="nombre_usuario" value="{{ nombre_usuario }}">
-        <input type="hidden" name="num_frases" value="{{ num_frases }}">
-        {% for index, frase in enumerate(frases_seleccionadas) %}
-        <div>
-            <h3>Frase {{ index + 1 }}:</h3>
-            <p>{{ frase['frase'] }}</p>
-            <h3>Opciones:</h3>
-            {% for opcion in frase['opciones'] %}
-            <input type="radio" name="opcion{{ index }}" value="{{ opcion }}"> {{ opcion }}<br>
-            {% endfor %}
-            <input type="hidden" name="respuesta_correcta{{ index }}" value="{{ frase['respuesta_correcta'] }}">
-        </div>
-        {% endfor %}
-        <input type="submit" value="Responder">
-    </form>
-</body>
-</html>
+    
+        <h2>Bienvenido, {{ nombre_usuario }}!</h2>
+        <form method="POST" action="/game">
+            <input type="hidden" name="nombre_usuario" value="{{ nombre_usuario }}">
+            <input type="hidden" name="num_frases" value="{{ num_frases }}">
+        
+            <div class="question">
+                <p>Adivina a qué película corresponde la siguiente frase:</p>
+                <h1>"{{ frase }}"</h1>
+            </div>
+            
+            <div class="options">
+                <label for="opcion">Selecciona una opción:</label>
+                <select name="opcion">
+                    <option value="1">Opción 1: {{ opciones[0] }}</option>
+                    <option value="2">Opción 2: {{ opciones[1] }}</option>
+                    <option value="3">Opción 3: {{ opciones[2] }}</option>
+                </select>
+                <br><br>
+                <input type="submit" value="Responder">
+            </div>
+        </form>
+    
+        {% if mostrar_resultado %}
+            <div class="result">
+                {{ respuesta }}
+            </div>
+            <br><br>
+            <div class="score">
+                <p>Puntaje: {{ punt }}</p>
+            </div>
+        {% endif %}
+    </body>
+    </html>
